@@ -1,6 +1,11 @@
 defmodule Matching do
   use Application
 
+  alias Matching.{
+    GameSupervisor,
+    Game
+  }
+
   # See http://elixir-lang.org/docs/stable/elixir/Application.html
   # for more information on OTP Applications
   def start(_type, _args) do
@@ -8,8 +13,8 @@ defmodule Matching do
 
     # Define workers and child supervisors to be supervised
     children = [
-      # Starts a worker by calling: Matching.Worker.start_link(arg1, arg2, arg3)
-      # worker(Matching.Worker, [arg1, arg2, arg3]),
+      worker(GameSupervisor, []),
+      worker(Game.Event, [])
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
